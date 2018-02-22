@@ -67,10 +67,12 @@ contract Betting {
             bets[msg.sender] = newBet;
             if (gamblerA == 0) {
               gamblerA = msg.sender;
+              BetMade(msg.sender);
             }
             else if (gamblerB == 0) {
               gamblerB = msg.sender;
               BetClosed();
+              BetMade(msg.sender);
             }
       }
       return (checkOutcomes(_outcome) > 0);
