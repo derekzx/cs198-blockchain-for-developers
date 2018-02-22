@@ -107,7 +107,7 @@ contract Betting {
 
     /* Allow anyone to check the outcomes they can bet on */
     function checkOutcomes(uint outcome) public view returns (uint) {
-      returns outcomes[outcome];
+      return outcomes[outcome];
     }
 
     /* Allow anyone to check if they won any bets */
