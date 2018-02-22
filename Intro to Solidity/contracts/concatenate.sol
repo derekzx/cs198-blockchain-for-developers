@@ -18,7 +18,7 @@ contract Concatenate {
     }
 
     /* BONUS */
-    function concatWithImport(string s, string t) public returns (string) {
+/*    function concatWithImport(string s, string t) public returns (string) {
 
-    }
+    } */
 }
