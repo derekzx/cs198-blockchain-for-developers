@@ -49,7 +49,11 @@ contract Betting {
       _;
     }
     modifier outcomeExists(uint outcome) {
-      require(outcomes[outcome] > 0);
+      require(outcomes[outcome] > 0 && outcomes[outcome] <= 1);
+      _;
+    }
+    modifier bothBetsMade() {
+      require(bets[gamblerA].initialized && bets[gamblerB].initialized);
       _;
     }
 
@@ -79,10 +83,10 @@ contract Betting {
     }
 
     /* The oracle chooses which outcome wins */
-    function makeDecision(uint _outcome) public oracleOnly() outcomeExists(_outcome) {
-      require(bets[gamblerA].initialized && bets[gamblerB].initialized);
+    function makeDecision(uint _outcome) public oracleOnly() outcomeExists(_outcome) bothBetsMade() {
+
       uint winz = bets[gamblerA].amount + bets[gamblerB].amount;
-      /*not sure if we need this portion. Does this part make sense?*/
+
       if (bets[gamblerA].outcome == bets[gamblerB].outcome) {
             winnings[gamblerA] += bets[gamblerA].amount;
             winnings[gamblerB] += bets[gamblerB].amount;
