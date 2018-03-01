@@ -55,9 +55,12 @@ contract GoodAuction is AuctionInterface {
 		and applying it to the reduceBid function 
 		you fill in below. */
 	modifier canReduce() {
+		//Only for truffle
 		if (msg.sender != highestBidder) {
 			return;
 		}
+		//for real code on the mainnet
+		// require(msg.sender == highestBidder);
 		_;
 	}
 
