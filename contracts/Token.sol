@@ -65,7 +65,7 @@ contract Token is ERC20Interface {
 		}
 			balances[msg.sender] = balances[msg.sender] - tokens;
 			balances[to] = balances[to] + tokens;
-			Transfer(msg.sender, to, tokens)
+			Transfer(msg.sender, to, tokens);
 			return true;
 	}
 
@@ -73,7 +73,7 @@ contract Token is ERC20Interface {
 	//     function approve(address spender, uint tokens) public returns (bool success);
 	function approve(address spender, uint tokens) public returns (bool success) {
 			allowed[msg.sender][spender] = allowed[msg.sender][spender] + tokens;
-			Approval(msg.sender, spender, tokens)
+			Approval(msg.sender, spender, tokens);
 			return true;
 	}
 	//     function transferFrom(address from, address to, uint tokens) public returns (bool success);

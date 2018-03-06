@@ -19,14 +19,29 @@ contract Queue {
 	// Must have a time limit someone can keep their spot in the front; this prevents griefing
 	uint public timeLimit;
 
+	bool public hasOwnerSetup;
+
 	/* Add events */
 	// 	Events:
 	event QueueTimeLimitReached(address removedAddress);
 
+	modifier ownerHasNotSetup() {
+		if (hasOwnerSetup == true) {
+			return;
+		}
+		_;
+	}
+
 	/* Add constructor */
-	function Queue(uint _timeLimit) {
-		timeLimit = _timeLimit;
+	function Queue() {
+		hasOwnerSetup = false;
 		currentSize = 0;
+	}
+
+	function setTimeLimit(uint _timeLimit) ownerHasNotSetup() returns (bool success) {
+		hasOwnerSetup = true;
+		timeLimit = _timeLimit;
+		return hasOwnerSetup;
 	}
 
 	/* Returns the number of people waiting in line */
