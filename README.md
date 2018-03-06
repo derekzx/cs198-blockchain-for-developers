@@ -11,29 +11,21 @@ SID: 303348336
 
 Email: derek.zx@berkeley.edu
 
-###### Project Partner 2
+Project Partner 2
 
-<<<<<<< HEAD
-Name: Jazz Singh	
-
-SID: 3032760161
-
-Email: jasmine_singh@berkeley.edu 
-=======
 Name: Chris Iba
 
 SID: 3032040025
 
 Email: chris.iba@berkeley.edu
->>>>>>> e9ddb6a4146e9a2aef5c2d80dd06b3248f7f07d6
 
-###### Project Partner 3 (if any)
+Project Partner 3 (if any)
 
-Name:
+Name: Jazz Singh	
 
-SID:
+SID: 3032760161
 
-Email:
+Email: jasmine_singh@berkeley.edu
 
 ## Midterm Instructions
 
