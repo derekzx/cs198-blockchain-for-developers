@@ -5,11 +5,11 @@ Welcome to the Blockchain for Developers DeCal's midterm assignment. You'll be d
 
 ###### Project Partner 1
 
-Name:
+Name: Derek Chin Zhi Xian
 
-SID:
+SID: 303348336
 
-Email:
+Email: derek.zx@berkeley.edu
 
 ###### Project Partner 2
 
