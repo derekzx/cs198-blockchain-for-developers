@@ -11,7 +11,7 @@ contract Queue {
 	/* State variables */
 	// Must have a finite size, please keep this set to 5
 	uint8 size = 5;
-	uint8 currentSize = 0;
+	uint8 currentSize;
 	//Not sure if this is correct but I cannot find any members which can access Array type data efficeintly
 	mapping(address => uint) queuersAddressToIndex;
 	mapping(uint => address) queuersIndexToAddress;
@@ -26,6 +26,7 @@ contract Queue {
 	/* Add constructor */
 	function Queue(uint _timeLimit) {
 		timeLimit = _timeLimit;
+		currentSize = 0;
 	}
 
 	/* Returns the number of people waiting in line */
