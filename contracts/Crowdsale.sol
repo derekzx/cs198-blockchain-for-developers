@@ -66,9 +66,9 @@ contract Crowdsale {
 	}
 
 	function createQueue() {
-    	Queue queue = new queue();
-    	LogChildCreated(child); // emit an event - another way to monitor this
-    	children.push(child); // you can use the getter to fetch child addresses
+    	// Queue queue = new Queue();
+    	// LogChildCreated(child); // emit an event - another way to monitor this
+    	// children.push(child); // you can use the getter to fetch child addresses
   	}
 
 	// Must keep track of start-time
@@ -90,13 +90,13 @@ contract Crowdsale {
 	// Must be able to mint new tokens
 	// This amount would be added to totalSupply in Token.sol
 	function mintToken(uint mintAmount) constant public ownerOnly() returns(bool success) {
-		return token.addToken(mintAmount);
+		return this.token.addToken(mintAmount);
 	}
 	
 	// Must be able to burn tokens not sold yet
 	// This amount would be subtracted from totalSupply in Token.sol
 	function burnToken(uint burnAmount) constant public ownerOnly() returns(bool success) {
-		return token.subtractToken(burnAmount);
+		return this.token.subtractToken(burnAmount);
 	}
 
 	// Must be able to receive funds from contract after the sale is over
@@ -114,16 +114,16 @@ contract Crowdsale {
 	function buyTokens(uint amount) constant public buyTime() returns (bool success) {
 		//need to figure out queue interaction here
 		tokensSold += amount;
-		token.addToBalance(msg.sender, amount);
-		TokensPurchased(msg.sender, amount);
+		this.token.addToBalance(msg.sender, amount);
+		tokenPurchased(msg.sender, amount);
 		return true;
 	}	
 	
 	// Must be able to refund their tokens as long as the sale has not ended. Their place in the queue does not matter
 	function refundTokens(uint amount) constant public buyTime() returns (bool success) {
 		tokensSold -= amount;
-		token.removeFromBalance(msg.sender, amount);
-		TokensRefunded(msg.sender, amount);
+		this.token.removeFromBalance(msg.sender, amount);
+		tokenRefunded(msg.sender, amount);
 		return true;
 	}
 

@@ -14,7 +14,8 @@ contract('testTemplate', function(accounts) {
 
 	/* Do something before every `describe` method */
 	beforeEach(async function() {
-		// YOUR CODE HERE
+		let timeLimit = 1000;
+		q = await Queue.new(timeLimit);
 	});
 
 	/* Group test cases together 
@@ -22,8 +23,9 @@ contract('testTemplate', function(accounts) {
 	 * assert statements
 	 */
 	describe('Your string here', function() {
-		it("your string here", async function() {
-			// YOUR CODE HERE
+		it("Queue has fixed size of 5", async function() {
+			let qSize = q.qsize();
+			assert.equal(qSize, 5, "set correct");
 		});
 		// YOUR CODE HERE
 	});
