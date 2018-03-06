@@ -21,8 +21,8 @@ contract Crowdsale {
 
 	// The contract must forward all funds to the owner after sale is over
 	address public owner;
-	address public tokenAddress;
-	address public queueAddress;
+	Token public token;
+	Queue public queue;
 	
 	modifier ownerOnly() {
 		//'IF' used instead of 'REQUIRE' because of truffle
@@ -52,7 +52,7 @@ contract Crowdsale {
 	// Must be able to specify an initial amount of tokens to create
 	// Must be able to specify the amount of tokens 1 wei is worth
 	
-	function Crowdsale(uint _startTime, uint _endTime, uint _initialTokenAmount, uint _tokenPerWei, uint _timeLimit) {
+	function Crowdsale(uint _startTime, uint _endTime, uint _initialTokenAmount, uint _tokenPerWei, uint _timeLimit) public {
 		owner = msg.sender;
 		startTime = _startTime;
 		endTime = _endTime;
@@ -62,8 +62,8 @@ contract Crowdsale {
 		// 	Must deploy Token.sol 
 		//  check out ../migrations/2_deploy_contracts.js (commented part)
 		// tokenAddress = _tokenAddress;
-		tokenAddress = new Token(initialTokenAmount);
-		queueAddress = new Queue(_timeLimit);
+		token = Token(initialTokenAmount);
+		queue = Queue(_timeLimit);
 	}
 
 	// Must keep track of start-time
@@ -83,19 +83,19 @@ contract Crowdsale {
 	// Must be able to mint new tokens
 	// This amount would be added to totalSupply in Token.sol
 	function mintToken(uint mintAmount) constant public ownerOnly() returns(bool success) {
-		return tokenAddress.addToken(mintAmount);
+		return token.addToken(mintAmount);
 	}
 	
 	// Must be able to burn tokens not sold yet
 	// This amount would be subtracted from totalSupply in Token.sol
 	function burnToken(uint burnAmount) constant public ownerOnly() returns(bool success) {
-		return tokenAddress.subtractToken(burnAmount);
+		return token.subtractToken(burnAmount);
 	}
 
 	// Must be able to receive funds from contract after the sale is over
-	function sendContractFunds() constant public ownerOnly() returns (int fundsReturned) {
+	function sendContractFunds() constant public ownerOnly() returns (uint fundsReturned) {
 		require (now > endTime);
-		int balanceReturned = this.balance;
+		uint balanceReturned = this.balance;
 		owner.transfer(this.balance);
 		return balanceReturned;
 	}
@@ -106,9 +106,9 @@ contract Crowdsale {
 	// This would change the number of tokens sold
 	function buyTokens(uint amount) constant public buyTime() returns (bool success) {
 		//need to figure out queue interaction here
-		if (msg.sender == queueAddress.getFirst() && queueAddress.queueSize() > 1) {
+		if (msg.sender == queue.getFirst() && queue.qsize() > 1) {
 			tokensSold += amount;
-			tokenAddress.addToBalance(msg.sender, amount);
+			token.addToBalance(msg.sender, amount);
 			TokensPurchased(msg.sender, amount);
 			return true;
 		}
@@ -118,7 +118,7 @@ contract Crowdsale {
 	// Must be able to refund their tokens as long as the sale has not ended. Their place in the queue does not matter
 	function refundTokens(uint amount) constant public buyTime() returns (bool success) {
 		tokensSold -= amount;
-		Token.removeFromBalance(msg.sender, amount);
+		token.removeFromBalance(msg.sender, amount);
 		TokensRefunded(msg.sender, amount);
 		return true;
 	}
@@ -126,7 +126,7 @@ contract Crowdsale {
 	// This would change their balance in Token.sol
 	// This would change the number of tokens sold
 	
-	function() payable {
+	function() public payable {
 		revert();
 	}
 }

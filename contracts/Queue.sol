@@ -60,6 +60,7 @@ contract Queue {
 		uint currentTimeInQueue = now - timeInQueue;
 
 		if (currentTimeInQueue > timeLimit) {
+			address first = getFirst();
 			dequeue();
 			QueueTimeLimitReached(first);
 		}
