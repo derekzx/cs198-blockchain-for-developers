@@ -83,10 +83,10 @@ contract Crowdsale {
 		initialTokenAmount = _initialTokenAmount;
 		tokenPerWei = _tokenPerWei;
 		token = new Token();
-		token.setTokenSupply(_initialTokenAmount);
+		bool tokenSetupSuccess = token.setTokenSupply(_initialTokenAmount);
 		queue = new Queue();
-		queue.setTimeLimit(_timeLimit);
-		return hasOwnerSetup;
+		bool queueSetupSuccess = queue.setTimeLimit(_timeLimit);
+		return (tokenSetupSuccess && queueSetupSuccess);
 		
 	}
 
