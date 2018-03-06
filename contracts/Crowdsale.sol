@@ -19,6 +19,8 @@ contract Crowdsale {
 	uint initialTokenAmount;
 	uint tokenPerWei;
 
+	bool hasOwnerSetup;
+
 	// The contract must forward all funds to the owner after sale is over
 	address public owner;
 	Token public token;
@@ -40,6 +42,13 @@ contract Crowdsale {
 		_;
 	}
 
+	modifier ownerHasNotSetup() {
+		if (hasOwnerSetup == true) {
+			return;
+		}
+		_;
+	}
+
 	// Events:
 	// Fired on token purchase
 	// Fired on token refund
@@ -52,18 +61,31 @@ contract Crowdsale {
 	// Must be able to specify an initial amount of tokens to create
 	// Must be able to specify the amount of tokens 1 wei is worth
 	
-	function Crowdsale(uint _startTime, uint _endTime, uint _initialTokenAmount, uint _tokenPerWei, uint _timeLimit) public {
+	function Crowdsale() public {
 		owner = msg.sender;
+		// startTime = _startTime;
+		// endTime = _endTime;
+		// initialTokenAmount = _initialTokenAmount;
+		// tokenPerWei = _tokenPerWei;
+		tokensSold = 0;
+		// uint _startTime, uint _endTime, uint _initialTokenAmount, uint _tokenPerWei, uint _timeLimit
+
+		// 	Must deploy Token.sol 
+		//  check out ../migrations/2_deploy_contracts.js (commented part)
+		// tokenAddress = _tokenAddress;
+		
+	}
+
+	function setCrowdsaleDetails(uint _startTime, uint _endTime, uint _initialTokenAmount, uint _tokenPerWei, uint _timeLimit) public ownerOnly() ownerHasNotSetup() returns (bool success)  {
+		hasOwnerSetup = true;
 		startTime = _startTime;
 		endTime = _endTime;
 		initialTokenAmount = _initialTokenAmount;
 		tokenPerWei = _tokenPerWei;
-		tokensSold = 0;
-		// 	Must deploy Token.sol 
-		//  check out ../migrations/2_deploy_contracts.js (commented part)
-		// tokenAddress = _tokenAddress;
 		token = Token(initialTokenAmount);
 		queue = Queue(_timeLimit);
+		return hasOwnerSetup;
+		
 	}
 
 	// Must keep track of start-time

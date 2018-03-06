@@ -169,6 +169,7 @@
                       "typeIdentifier": "t_address",
                       "typeString": "address"
                     },
+<<<<<<< HEAD
                     "id": 293,
                     "isConstant": false,
                     "isLValue": false,
@@ -188,6 +189,73 @@
                           "typeIdentifier": "t_magic_message",
                           "typeString": "msg"
                         }
+=======
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "commonType": {
+                            "typeIdentifier": "t_address",
+                            "typeString": "address"
+                          },
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "operator": "==",
+                          "type": "bool"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "member_name": "sender",
+                              "referencedDeclaration": null,
+                              "type": "address"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 917,
+                                  "type": "msg",
+                                  "value": "msg"
+                                },
+                                "id": 290,
+                                "name": "Identifier",
+                                "src": "153:3:1"
+                              }
+                            ],
+                            "id": 291,
+                            "name": "MemberAccess",
+                            "src": "153:10:1"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 286,
+                              "type": "address",
+                              "value": "owner"
+                            },
+                            "id": 292,
+                            "name": "Identifier",
+                            "src": "167:5:1"
+                          }
+                        ],
+                        "id": 293,
+                        "name": "BinaryOperation",
+                        "src": "153:19:1"
+>>>>>>> 503cdb1a5e28c9d872c4cf84430aff6accab0291
                       },
                       "id": 291,
                       "isConstant": false,
@@ -318,6 +386,7 @@
                 }
               ]
             },
+<<<<<<< HEAD
             "id": 306,
             "implemented": true,
             "isConstructor": true,
@@ -369,6 +438,95 @@
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
+=======
+            "children": [
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 298,
+                "name": "ParameterList",
+                "src": "211:2:1"
+              },
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 299,
+                "name": "ParameterList",
+                "src": "220:0:1"
+              },
+              {
+                "children": [
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "operator": "=",
+                          "type": "address"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "overloadedDeclarations": [
+                                null
+                              ],
+                              "referencedDeclaration": 286,
+                              "type": "address",
+                              "value": "owner"
+                            },
+                            "id": 300,
+                            "name": "Identifier",
+                            "src": "227:5:1"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "member_name": "sender",
+                              "referencedDeclaration": null,
+                              "type": "address"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 917,
+                                  "type": "msg",
+                                  "value": "msg"
+                                },
+                                "id": 301,
+                                "name": "Identifier",
+                                "src": "235:3:1"
+                              }
+                            ],
+                            "id": 302,
+                            "name": "MemberAccess",
+                            "src": "235:10:1"
+                          }
+                        ],
+                        "id": 303,
+                        "name": "Assignment",
+                        "src": "227:18:1"
+>>>>>>> 503cdb1a5e28c9d872c4cf84430aff6accab0291
                       }
                     },
                     "nodeType": "Assignment",
@@ -1367,6 +1525,7 @@
     "version": "0.4.19+commit.c4cbbb05.Emscripten.clang"
   },
   "networks": {
+<<<<<<< HEAD
     "1520365840611": {
       "events": {},
       "links": {},
@@ -1376,4 +1535,14 @@
   },
   "schemaVersion": "2.0.0",
   "updatedAt": "2018-03-06T21:14:27.479Z"
+=======
+    "1520367972510": {
+      "events": {},
+      "links": {},
+      "address": "0xf7563d05ffb21e677d7d5cf0d2f5618fa0cfe83a"
+    }
+  },
+  "schemaVersion": "1.0.1",
+  "updatedAt": "2018-03-06T21:26:56.904Z"
+>>>>>>> 503cdb1a5e28c9d872c4cf84430aff6accab0291
 }
