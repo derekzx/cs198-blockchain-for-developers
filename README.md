@@ -13,11 +13,11 @@ Email: derek.zx@berkeley.edu
 
 ###### Project Partner 2
 
-Name:
+Name: Chris Iba
 
-SID:
+SID: 3032040025
 
-Email:
+Email: chris.iba@berkeley.edu
 
 ###### Project Partner 3 (if any)
 
