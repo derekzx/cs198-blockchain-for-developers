@@ -15,7 +15,7 @@ contract Queue {
 	//Not sure if this is correct but I cannot find any members which can access Array type data efficeintly
 	mapping(address => uint) queuersAddressToIndex;
 	mapping(uint => address) queuersIndexToAddress;
-	mapping(address => uint) timeInQueue;
+	uint timeInQueue;
 	// Must have a time limit someone can keep their spot in the front; this prevents griefing
 	uint public timeLimit;
 
@@ -40,37 +40,35 @@ contract Queue {
 		}
 		return false;
 	}
-	
+
 	/* Returns the address of the person in the front of the queue */
 	function getFirst() constant returns(address) {
 		return queuersIndexToAddress[1];
 	}
-	
+
 	/* Allows `msg.sender` to check their position in the queue */
 	function checkPlace() constant returns(uint8) {
 		return uint8(queuersAddressToIndex[msg.sender]);
 	}
-	
+
 	/* Allows anyone to expel the first person in line if their time
 	 * limit is up
 	 */
 	function checkTime() external{
-		address first = queuersIndexToAddress[1];
 		//Time in queue unsure whether it depends on time in the 1st position or in queue
-		uint currentTimeInQueue = now - timeInQueue[first];
+		uint currentTimeInQueue = now - timeInQueue;
 
 		if (currentTimeInQueue > timeLimit) {
 			dequeue();
 			QueueTimeLimitReached(first);
 		}
 	}
-	
+
 	/* Removes the first person in line; either when their time is up or when
 	 * they are done with their purchase
 	 */
 	function dequeue() private {
-		queuersAddressToIndex[queuersIndexToAddress[index]] = 0;
-		timeInQueue[queuersIndexToAddress[index]] = 0;
+		queuersAddressToIndex[queuersIndexToAddress[1]] = 0;
 		for (uint index = 1; index < 5; index++) {
 			//QItA 	[1 | 0xabc] --> to be deleted
 			//		[2 | 0xbcd] --> to be moved up
@@ -80,6 +78,7 @@ contract Queue {
 			queuersAddressToIndex[queuersIndexToAddress[index+1]] = index;
 		}
 		currentSize -= 1;
+		timeInQueue = now;
 	}
 
 	/* Places `addr` in the first empty position in the queue */
@@ -89,7 +88,7 @@ contract Queue {
 			queuersIndexToAddress[currentSize] = msg.sender;
 			queuersAddressToIndex[msg.sender] = currentSize;
 			//unsure about function, check out comment in CheckTime()
-			timeInQueue[msg.sender] = now;
+			/* timeInQueue[msg.sender] = now; */
 		}
 		//Not allowed to overwrite if queue is full
 		revert();
