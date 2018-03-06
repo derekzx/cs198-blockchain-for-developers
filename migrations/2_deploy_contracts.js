@@ -8,6 +8,6 @@ module.exports = function(deployer) {
 	// }).then(function() {}),
 	//Is the second deployment needed?
 	deployer.deploy(Crowdsale);
-	deployer.deploy(Token);
-	deployer.deploy(Queue);
+	// deployer.deploy(Token);
+	// deployer.deploy(Queue);
 };
