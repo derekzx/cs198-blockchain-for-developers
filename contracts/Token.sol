@@ -15,15 +15,29 @@ contract Token is ERC20Interface {
 	mapping(address => uint) balances;
 	mapping(address => mapping(address => uint)) allowed;
 
+	bool public hasOwnerSetup;
+
 	// Events:
 	// All standard events from ERC20Interface.sol
 	// Fired on buyers burning their tokens
 	event TokensBurned(address burnerAddress, uint tokensBurnt);
 
+	modifier ownerHasNotSetup() {
+		if (hasOwnerSetup == true) {
+			return;
+		}
+		_;
+	}
+
 	// totalSupply would be set on deployment of Crowdsale.sol
-	function Token(uint initialSupply) public {
-      totalSupply = initialSupply;
-  	}	
+	function Token() public {
+      	hasOwnerSetup = false;
+  	}
+
+	function setTokenSupply(uint _initialSupply) public ownerHasNotSetup() returns (bool success) {
+		totalSupply = _initialSupply;
+		return hasOwnerSetup;
+	}	
 	  
 	// 	Must implement ERC20Interface.sol fully
 	// 	contract ERC20Interface {
