@@ -11,21 +11,21 @@ SID: 303348336
 
 Email: derek.zx@berkeley.edu
 
-###### Project Partner 2
+Project Partner 2
 
-Name:
+Name: Chris Iba
 
-SID:
+SID: 3032040025
 
-Email:
+Email: chris.iba@berkeley.edu
 
-###### Project Partner 3 (if any)
+Project Partner 3 (if any)
 
-Name:
+Name: Jazz Singh	
 
-SID:
+SID: 3032760161
 
-Email:
+Email: jasmine_singh@berkeley.edu
 
 ## Midterm Instructions
 

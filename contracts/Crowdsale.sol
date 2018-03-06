@@ -19,9 +19,12 @@ contract Crowdsale {
 	uint initialTokenAmount;
 	uint tokenPerWei;
 
+	bool hasOwnerSetup;
+
 	// The contract must forward all funds to the owner after sale is over
 	address public owner;
-	address public tokenAddress;
+	Token public token;
+	Queue public queue;
 	
 	modifier ownerOnly() {
 		//'IF' used instead of 'REQUIRE' because of truffle
@@ -39,11 +42,18 @@ contract Crowdsale {
 		_;
 	}
 
+	modifier ownerHasNotSetup() {
+		if (hasOwnerSetup == true) {
+			return;
+		}
+		_;
+	}
+
 	// Events:
 	// Fired on token purchase
 	// Fired on token refund
-	event tokenPurchased(address purchaserAddress, uint purchasedAmount);
-	event tokenRefunded(address refundeeAddress, uint refundedAmount);
+	event TokensPurchased(address purchaserAddress, uint purchasedAmount);
+	event TokensRefunded(address refundeeAddress, uint refundedAmount);
 
 	// Owner:
 	// Must be set on deployment
@@ -51,26 +61,44 @@ contract Crowdsale {
 	// Must be able to specify an initial amount of tokens to create
 	// Must be able to specify the amount of tokens 1 wei is worth
 	
-	function Crowdsale(uint _startTime, uint _endTime, uint _initialTokenAmount, uint _tokenPerWei, address _tokenAddress) {
+	function Crowdsale() public {
 		owner = msg.sender;
+		// startTime = _startTime;
+		// endTime = _endTime;
+		// initialTokenAmount = _initialTokenAmount;
+		// tokenPerWei = _tokenPerWei;
+		tokensSold = 0;
+		// uint _startTime, uint _endTime, uint _initialTokenAmount, uint _tokenPerWei, uint _timeLimit
+
+		// 	Must deploy Token.sol 
+		//  check out ../migrations/2_deploy_contracts.js (commented part)
+		// tokenAddress = _tokenAddress;
+		
+	}
+
+	function setCrowdsaleDetails(uint _startTime, uint _endTime, uint _initialTokenAmount, uint _tokenPerWei, uint _timeLimit) public ownerOnly() ownerHasNotSetup() returns (bool success)  {
+		hasOwnerSetup = true;
 		startTime = _startTime;
 		endTime = _endTime;
 		initialTokenAmount = _initialTokenAmount;
 		tokenPerWei = _tokenPerWei;
-		tokensSold = 0;
-		// 	Must deploy Token.sol 
-		//  check out ../migrations/2_deploy_contracts.js
-		tokenAddress = _tokenAddress;
-		Token token = new Token(initialTokenAmount);
-		createQueue();
+		token = new Token();
+		bool tokenSetupSuccess = token.setTokenSupply(_initialTokenAmount);
+		queue = new Queue();
+		bool queueSetupSuccess = queue.setTimeLimit(_timeLimit);
+		return (tokenSetupSuccess && queueSetupSuccess);
+		
 	}
 
+<<<<<<< HEAD
 	function createQueue() {
     	// Queue queue = new Queue();
     	// LogChildCreated(child); // emit an event - another way to monitor this
     	// children.push(child); // you can use the getter to fetch child addresses
   	}
 
+=======
+>>>>>>> 1091b1abae72a22153f09c89bd66b6893dc6e70a
 	// Must keep track of start-time
 	function checkStartTime() view public ownerOnly() returns(uint) {
 		return startTime;
@@ -82,10 +110,8 @@ contract Crowdsale {
 	}
 
 	function checkRemainingTime() constant public ownerOnly() returns(uint) {
-		return (now-startTime);
+		return (now-startTime); 
 	}
-
-	
 	
 	// Must be able to mint new tokens
 	// This amount would be added to totalSupply in Token.sol
@@ -100,9 +126,9 @@ contract Crowdsale {
 	}
 
 	// Must be able to receive funds from contract after the sale is over
-	function sendContractFunds() constant public ownerOnly() returns (int fundsReturned) {
+	function sendContractFunds() constant public ownerOnly() returns (uint fundsReturned) {
 		require (now > endTime);
-		int balanceReturned = this.balance;
+		uint balanceReturned = this.balance;
 		owner.transfer(this.balance);
 		return balanceReturned;
 	}
@@ -113,10 +139,20 @@ contract Crowdsale {
 	// This would change the number of tokens sold
 	function buyTokens(uint amount) constant public buyTime() returns (bool success) {
 		//need to figure out queue interaction here
+<<<<<<< HEAD
 		tokensSold += amount;
 		this.token.addToBalance(msg.sender, amount);
 		tokenPurchased(msg.sender, amount);
 		return true;
+=======
+		if (msg.sender == queue.getFirst() && queue.qsize() > 1) {
+			tokensSold += amount;
+			token.addToBalance(msg.sender, amount);
+			TokensPurchased(msg.sender, amount);
+			return true;
+		}
+		return false;
+>>>>>>> 1091b1abae72a22153f09c89bd66b6893dc6e70a
 	}	
 	
 	// Must be able to refund their tokens as long as the sale has not ended. Their place in the queue does not matter
@@ -130,7 +166,7 @@ contract Crowdsale {
 	// This would change their balance in Token.sol
 	// This would change the number of tokens sold
 	
-	function() payable {
+	function() public payable {
 		revert();
 	}
 }

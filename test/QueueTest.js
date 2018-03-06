@@ -6,34 +6,24 @@ const Queue = artifacts.require("./Queue.sol");
 // YOUR CODE HERE
 
 contract('QueueTest', function(accounts) {
-	/* Define your constant variables and instantiate constantly changing 
-	 * ones
-	 */
-	 /*
-	const args = {};
-	let x, y, z;
-	*/
-	// YOUR CODE HERE
 
 	/* Do something before every `describe` method */
 	beforeEach(async function() {
 		let timeLimit = 1000;
 		q = await Queue.new(timeLimit);
 	});
-
-	 Group test cases together 
-	 * Make sure to provide descriptive strings for method arguements and
-	 * assert statements
 	 
 	describe('Your string here', function() {
 		it("Queue has fixed size of 5", async function() {
 			let qSize = q.qsize();
-			assert.equal(qSize, 5, "set correct");
+			assert.equal(qSize, 3456, "set correct");
 		});
-		// YOUR CODE HERE
+
+		it("Front is kicked out after time limit", async function() {
+			let exampleAddress = "0x123f681646d4a755815f9cb19e1acc8565a0c2ac"
+			q.enqueue(exampleAddress);
+
+			
+		});
 	});
-/*
-	describe('Your string here', function() {
-		// YOUR CODE HERE
-	});*/
 });
