@@ -90,15 +90,6 @@ contract Crowdsale {
 		
 	}
 
-<<<<<<< HEAD
-	function createQueue() {
-    	// Queue queue = new Queue();
-    	// LogChildCreated(child); // emit an event - another way to monitor this
-    	// children.push(child); // you can use the getter to fetch child addresses
-  	}
-
-=======
->>>>>>> 1091b1abae72a22153f09c89bd66b6893dc6e70a
 	// Must keep track of start-time
 	function checkStartTime() view public ownerOnly() returns(uint) {
 		return startTime;
@@ -116,13 +107,13 @@ contract Crowdsale {
 	// Must be able to mint new tokens
 	// This amount would be added to totalSupply in Token.sol
 	function mintToken(uint mintAmount) constant public ownerOnly() returns(bool success) {
-		return this.token.addToken(mintAmount);
+		return token.addToken(mintAmount);
 	}
 	
 	// Must be able to burn tokens not sold yet
 	// This amount would be subtracted from totalSupply in Token.sol
 	function burnToken(uint burnAmount) constant public ownerOnly() returns(bool success) {
-		return this.token.subtractToken(burnAmount);
+		return token.subtractToken(burnAmount);
 	}
 
 	// Must be able to receive funds from contract after the sale is over
@@ -139,12 +130,6 @@ contract Crowdsale {
 	// This would change the number of tokens sold
 	function buyTokens(uint amount) constant public buyTime() returns (bool success) {
 		//need to figure out queue interaction here
-<<<<<<< HEAD
-		tokensSold += amount;
-		this.token.addToBalance(msg.sender, amount);
-		tokenPurchased(msg.sender, amount);
-		return true;
-=======
 		if (msg.sender == queue.getFirst() && queue.qsize() > 1) {
 			tokensSold += amount;
 			token.addToBalance(msg.sender, amount);
@@ -152,14 +137,13 @@ contract Crowdsale {
 			return true;
 		}
 		return false;
->>>>>>> 1091b1abae72a22153f09c89bd66b6893dc6e70a
 	}	
 	
 	// Must be able to refund their tokens as long as the sale has not ended. Their place in the queue does not matter
 	function refundTokens(uint amount) constant public buyTime() returns (bool success) {
 		tokensSold -= amount;
-		this.token.removeFromBalance(msg.sender, amount);
-		tokenRefunded(msg.sender, amount);
+		token.removeFromBalance(msg.sender, amount);
+		TokensRefunded(msg.sender, amount);
 		return true;
 	}
 

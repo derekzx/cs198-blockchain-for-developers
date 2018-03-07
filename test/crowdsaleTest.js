@@ -13,7 +13,7 @@ contract('Crowdsale', function(accounts) {
         testSale = await Crowdsale.new();
     });
     describe('Test test', function() {
-        console.log(hello);
+        console.log('hello');
     });
 
 	
