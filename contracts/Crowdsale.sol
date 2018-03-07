@@ -23,6 +23,7 @@ contract Crowdsale {
 
 	// The contract must forward all funds to the owner after sale is over
 	address public owner;
+	mapping (address => bool) public blacklist;
 	Token public token;
 	Queue public queue;
 	
@@ -44,6 +45,14 @@ contract Crowdsale {
 
 	modifier ownerHasNotSetup() {
 		if (hasOwnerSetup == true) {
+			return;
+		}
+		_;
+	}
+
+	//Enforce a black/white-list of addresses that are/aren't able to participate in the crowdsale
+	modifier notBlackList() {
+		if (blacklist[msg.sender] == true) {
 			return;
 		}
 		_;
@@ -106,18 +115,18 @@ contract Crowdsale {
 	
 	// Must be able to mint new tokens
 	// This amount would be added to totalSupply in Token.sol
-	function mintToken(uint mintAmount) constant public ownerOnly() returns(bool success) {
+	function mintToken(uint mintAmount) public ownerOnly() returns(bool success) {
 		return token.addToken(mintAmount);
 	}
 	
 	// Must be able to burn tokens not sold yet
 	// This amount would be subtracted from totalSupply in Token.sol
-	function burnToken(uint burnAmount) constant public ownerOnly() returns(bool success) {
+	function burnToken(uint burnAmount) public ownerOnly() returns(bool success) {
 		return token.subtractToken(burnAmount);
 	}
 
 	// Must be able to receive funds from contract after the sale is over
-	function sendContractFunds() constant public ownerOnly() returns (uint fundsReturned) {
+	function sendContractFunds() public ownerOnly() returns (uint fundsReturned) {
 		require (now > endTime);
 		uint balanceReturned = this.balance;
 		owner.transfer(this.balance);
@@ -128,7 +137,7 @@ contract Crowdsale {
 	// Must be able to buy tokens directly from the contract and as long as the sale has not ended, if they are first in the queue and there is someone waiting line behind them
 	// This would change their balance in Token.sol
 	// This would change the number of tokens sold
-	function buyTokens(uint amount) constant public buyTime() returns (bool success) {
+	function buyTokens(uint amount) public buyTime() notBlackList() returns (bool success) {
 		//need to figure out queue interaction here
 		if (msg.sender == queue.getFirst() && queue.qsize() > 1) {
 			tokensSold += amount;
@@ -140,16 +149,22 @@ contract Crowdsale {
 	}	
 	
 	// Must be able to refund their tokens as long as the sale has not ended. Their place in the queue does not matter
-	function refundTokens(uint amount) constant public buyTime() returns (bool success) {
+	// This would change their balance in Token.sol
+	// This would change the number of tokens sold
+	
+	function refundTokens(uint amount) public buyTime() returns (bool success) {
 		tokensSold -= amount;
 		token.removeFromBalance(msg.sender, amount);
 		TokensRefunded(msg.sender, amount);
 		return true;
 	}
 
-	// This would change their balance in Token.sol
-	// This would change the number of tokens sold
-	
+	// Add to blacklist
+	function addToBlacklist(address blacklistAddress) public ownerOnly() returns (bool success) {
+		blacklist[blacklistAddress] = true;
+		return blacklist[blacklistAddress];
+	}
+
 	function() public payable {
 		revert();
 	}
