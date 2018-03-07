@@ -27,6 +27,14 @@ SID: 3032760161
 
 Email: jasmine_singh@berkeley.edu
 
+Project Partner 4 (if any)
+
+Name: Jackson Chui
+
+SID:
+
+Email:
+
 ## Midterm Instructions
 
 Your task is to complete both `Token.sol` and `Crowdsale.sol` such that they each function as described below. `Queue.sol` is also a necessary data structure contract. Notice that `Token.sol` inherits from `contracts/interfaces/ERC20Interface.sol`.
