@@ -31,8 +31,6 @@ contract('Crowdsale', function(accounts) {
             });
         });
         
-    });
-
-	
+    });	
 
 });
