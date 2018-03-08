@@ -130,7 +130,7 @@ contract Crowdsale {
 	// This would change the number of tokens sold
 	function buyTokens(uint amount) constant public buyTime() returns (bool success) {
 		//need to figure out queue interaction here
-		if (msg.sender == queue.getFirst() && queue.qsize() > 1) {
+		if (msg.sender == queue.getFirst() && queue.qsize() > 1 && queue.qsize() > q.checkPlace()) { // ADDED new condition to ensure one person behind
 			tokensSold += amount;
 			token.addToBalance(msg.sender, amount);
 			TokensPurchased(msg.sender, amount);

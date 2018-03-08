@@ -33,12 +33,12 @@ contract Queue {
 	}
 
 	/* Add constructor */
-	function Queue() {
+	function Queue() public {
 		hasOwnerSetup = false;
 		currentSize = 0;
 	}
 
-	function setTimeLimit(uint _timeLimit) ownerHasNotSetup() returns (bool success) {
+	function setTimeLimit(uint _timeLimit) ownerHasNotSetup(), ownerOnly() returns (bool success) {
 		hasOwnerSetup = true;
 		timeLimit = _timeLimit;
 		return hasOwnerSetup;
