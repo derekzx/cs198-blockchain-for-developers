@@ -20,10 +20,11 @@ contract('QueueTest', function(accounts) {
 		let timeLimit = 1000;
 		q = await Queue.new(timeLimit);
 	});
-
+/*
 	 Group test cases together 
 	 * Make sure to provide descriptive strings for method arguements and
 	 * assert statements
+	 */
 	 
 	describe('Your string here', function() {
 		it("Queue has fixed size of 5", async function() {
