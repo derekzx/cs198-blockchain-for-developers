@@ -9,13 +9,36 @@ contract('Crowdsale', function(accounts) {
     let testSale;
     
     beforeEach(async function() {
-        //Deploys a crowsale to test
+        //Deploys a crowdsale to test
         testSale = await Crowdsale.new();
+        //may need to initiate another owner contract & user contract to interact with this
     });
+<<<<<<< HEAD
     describe('Test test', function() {
         console.log("hello");
     });
 
 	
+=======
+    describe('~Crowdsale Works~', function() {
+        describe('Owner Token Operations', function() {
+            it('Owner able to mint tokens', function() {
+                //YOUR CODE HERE
+            });
+            it('Owner able to burn tokens', function() {
+                //YOUR CODE HERE
+            });
+        });
+        describe('User Token Operations', function() {
+            it('User able to buy tokens', function() {
+                //YOUR CODE HERE
+            });
+            it('User able to refund tokens', function() {
+                //YOUR CODE HERE
+            });
+        });
+        
+    });	
+>>>>>>> 54107fffe88effe0cc47bceca321e1e94199a213
 
 });

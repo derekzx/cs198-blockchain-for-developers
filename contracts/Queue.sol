@@ -58,12 +58,12 @@ contract Queue {
 	}
 
 	/* Returns the address of the person in the front of the queue */
-	function getFirst() constant returns(address) {
+	function getFirst() view public returns(address) {
 		return queuersIndexToAddress[1];
 	}
 
 	/* Allows `msg.sender` to check their position in the queue */
-	function checkPlace() constant returns(uint8) {
+	function checkPlace() view public returns(uint8) {
 		return uint8(queuersAddressToIndex[msg.sender]);
 	}
 
@@ -99,15 +99,17 @@ contract Queue {
 	}
 
 	/* Places `addr` in the first empty position in the queue */
-	function enqueue(address addr) external{
+	function enqueue() external returns (bool success){
 		if (currentSize < size) {
 			currentSize += 1;
 			queuersIndexToAddress[currentSize] = msg.sender;
 			queuersAddressToIndex[msg.sender] = currentSize;
 			//unsure about function, check out comment in CheckTime()
 			/* timeInQueue[msg.sender] = now; */
+			return true;
 		}
 		//Not allowed to overwrite if queue is full
 		revert();
+		return false;
 	}
 }

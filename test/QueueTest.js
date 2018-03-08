@@ -6,20 +6,19 @@ const Queue = artifacts.require("./Queue.sol");
 // YOUR CODE HERE
 
 contract('QueueTest', function(accounts) {
+	const args = {_timeLimit: 1000};
+	let q;
 
 	/* Do something before every `describe` method */
 	beforeEach(async function() {
-		let timeLimit = 1000;
-		q = await Queue.new(timeLimit);
+		//YOUR CODE HERE
+		q = await Queue.new();
+		q.setTimeLimit(args._timeLimit).call();
+		//TypeError: q.setTimeLimit(...).call is not a function
 	});
 	 
 	describe('Your string here', function() {
-		/*
-		it("Queue has fixed size of 5", async function() {
-			let qSize = q.qsize();
-			assert.equal(qSize, 5, "set correct");
-		});
-		*/
+
 		it("enqueue works", async function() {
 			let firstAddress = "0x123f681646d4a755815f9cb19e1acc8565a0c2ac";
 			let secondAddress = "0x321f681646d4a755815f9cb19e1acc8565a0c2ac";
@@ -51,6 +50,7 @@ contract('QueueTest', function(accounts) {
 
 			q.dequeue();
 			assert.equal(q.qsize(), 1, "back to 1");
+
 		});
 
 		it("checkPlace works", async function() {
