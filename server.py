@@ -77,7 +77,12 @@ if __name__ == '__main__':
         (defaults to 12345)")
     args = parser.parse_args()
     p = args.port if args.port else 12345
+    
     # Feel free to change this
+    hostName = socket.gethostname()
+    print("Host name is  " + hostName)
+    print("Host ip is " + socket.gethostbyname(hostName))
+    print("port is " + str(p))
     sock = Server(socket.gethostname(), p)
     sock.listen()
     sock.close()

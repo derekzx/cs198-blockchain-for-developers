@@ -10,6 +10,8 @@ class Client(object):
         self.protocol = protocol
         self.sock = socket.socket()
         try:
+            print (host)
+            print (port)
             self.sock.connect((host, port))
             self.host = host
             self.port = port
@@ -44,7 +46,10 @@ if __name__ == '__main__':
     p = args.port if args.port else 12345
     m = args.message if args.message else 'PING'
     # Feel free to change this
-    sock = Client(socket.gethostname(), p)
+    print (p)
+    print ('message is ' + m)
+    sock = Client('172.20.10.3', p)
+    # sock = Client(socket.gethostname(), p)
     sock.push(m)
     sock.get_msg()
     sock.close()
