@@ -87,6 +87,8 @@ class TestMerkleProof(unittest.TestCase):
         proof = merkle_proof(tx1, merkle_tree)
         verified_hash = verify_proof(tx1, proof)
 
+        print("the correct merkle_tree block header is" + merkle_tree.block_header)
+
         self.assertEqual(verified_hash, merkle_tree.block_header)
 
 if __name__ == '__main__':
