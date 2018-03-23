@@ -81,7 +81,7 @@ def verify_proof(tx, merkle_proof):
             raise AttributeError
         merkle_proof = merkle_proof[:-1]
     
-    print("answer is " + tx)
+    # print("answer is " + tx)
     return tx
 
 
