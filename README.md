@@ -1,3 +1,8 @@
+# Done by:
+Derek Chin
+
+Jackson Chui
+
 # Inline Assembly
 
 Inline assembly is contained within normal solidity code and allows low-level access to the EVM.
