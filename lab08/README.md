@@ -439,7 +439,7 @@ S3 = [end pop 0x0 mstore 32 0x0 return]
 
 This is how it flows:
 
-![SimpleAsmDiag](images/SimpleAsmDiag.png)
+![SimpleAsmDiag](/lab08/images/SimpleAsmDiag.png)
 
 There is really only two possible paths: It can either go directly from start to finish without passing S2, or it can execute the code in S2 a number of times before moving on from S1 to S3. If values are added or removed from the stack at S2, we could eventually get to S1 with a different stack then when we got there directly from S0, which could mean that the wrong values are used.
 
