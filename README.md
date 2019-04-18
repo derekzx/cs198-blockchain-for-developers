@@ -1,4 +1,4 @@
-# UC Berkeley - CS198 Blockchain for Developers project repository
+# UC Berkeley - CS198 Blockchain for Developers Project Repository
 
 This course was taken in the semester of Spring 2018
 
